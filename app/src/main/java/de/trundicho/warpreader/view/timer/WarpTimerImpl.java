@@ -1,6 +1,8 @@
 package de.trundicho.warpreader.view.timer;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.SystemClock;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,7 +33,6 @@ class WarpTimerImpl implements WarpTimer {
 
     @Override
     public void scheduleRepeating(int periodMillis) {
-        System.out.println(System.currentTimeMillis() % 1000);
         scheduledExecutorService.schedule(warper, periodMillis, TimeUnit.MILLISECONDS);
     }
 

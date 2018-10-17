@@ -26,7 +26,9 @@ public class TextAreaParserTimerBuilder {
                                       Activity activity) {
         this.parserDelay = parserDelay;
         this.activity = activity;
-        WebsiteParserAndWarper websiteParserAndWarper = new WebsiteParserAndWarperImpl(warpInitializer, i18nLocalizer);
+        WebsiteParserAndWarper websiteParserAndWarper = new WebsiteParserAndWarperImpl(warpInitializer,
+                i18nLocalizer,
+                activity);
         this.textAreaParser = new TextAreaParser(warpInitializer, websiteParserAndWarper);
         this.scheduledExecutorService = Executors.newScheduledThreadPool(1);
     }
