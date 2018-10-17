@@ -17,7 +17,8 @@ class InputTextWidgetImpl implements InputTextWidget {
     }
 
     @Override
-    public void setHelpText(String s) {
+    public void setHelpText(String hint) {
+        textArea.setHint(hint);
     }
 
     @Override

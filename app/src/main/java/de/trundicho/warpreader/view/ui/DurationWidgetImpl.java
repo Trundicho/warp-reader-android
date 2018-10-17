@@ -18,6 +18,6 @@ class DurationWidgetImpl implements NumberLabelWidget {
         int seconds = (overallDurationMs / 1000) % 60;
         long minutes = ((overallDurationMs / 1000) / 60);// % 60;
         int hours = (((overallDurationMs / 1000) / 60) / 60);
-        durationLabel.setText(minutes + "Min " + seconds + "Sec");
+        durationLabel.setText("Duration: " + minutes + "Min " + seconds + "Sec");
     }
 }

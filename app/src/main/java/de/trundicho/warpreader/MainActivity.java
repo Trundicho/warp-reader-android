@@ -1,5 +1,6 @@
 package de.trundicho.warpreader;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,7 +43,7 @@ import de.trundicho.warpreader.view.timer.WarpTimerFactoryImpl;
 import de.trundicho.warpreader.view.ui.I18nLocalizer;
 import de.trundicho.warpreader.view.ui.WarpReaderViewBuilderImpl;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private static final int DEFAULT_NUMBER_OF_CHARS_TO_DISPLAY = 15;
     private static final int DEFAULT_WORDS_PER_MINUTE = 100;
     private static final int TEXT_AREA_PARSER_DELAY = 500;

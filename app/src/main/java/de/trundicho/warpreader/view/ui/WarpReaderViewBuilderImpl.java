@@ -1,8 +1,10 @@
 package de.trundicho.warpreader.view.ui;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import de.trundicho.warp.reader.core.view.api.WarpReaderViewBuilder;
@@ -13,9 +15,9 @@ import de.trundicho.warpreader.R;
 
 public class WarpReaderViewBuilderImpl implements WarpReaderViewBuilder {
 
-    private AppCompatActivity appCompatActivity;
+    private Activity appCompatActivity;
 
-    public WarpReaderViewBuilderImpl(AppCompatActivity appCompatActivity) {
+    public WarpReaderViewBuilderImpl(Activity appCompatActivity) {
         this.appCompatActivity = appCompatActivity;
     }
 
@@ -24,11 +26,14 @@ public class WarpReaderViewBuilderImpl implements WarpReaderViewBuilder {
         WarpReaderViewModelMutable warpReaderViewModel = new WarpReaderViewModelImpl();
         TextView textArea = appCompatActivity.findViewById(R.id.textArea);
         warpReaderViewModel.setInputTextArea(new InputTextWidgetImpl(textArea));
-        NumberPicker wordsPerMinute = appCompatActivity.findViewById(R.id.wordsPerMinute);
+        SeekBar wordsPerMinute = appCompatActivity.findViewById(R.id.wordsPerMinute);
         Button playButton = appCompatActivity.findViewById(R.id.playButton);
-        warpReaderViewModel.setWordsPerMinuteBox(new WordsPerMinuteWidgetImpl(wordsPerMinute));
+        TextView wordsPerMinuteLabel = appCompatActivity.findViewById(R.id.wordsPerMinuteLabel);
+        warpReaderViewModel.setWordsPerMinuteBox(new WordsPerMinuteWidgetImpl(wordsPerMinute, wordsPerMinuteLabel));
         warpReaderViewModel.setPlayButton(new PlayButtonWidgetImpl(playButton));
-        warpReaderViewModel.setReadPosition(new ReadPositionPercentageWidgetImpl(appCompatActivity.findViewById(R.id.readPosition)));
+        SeekBar positionBar = appCompatActivity.findViewById(R.id.readPosition);
+        TextView positionLabel = appCompatActivity.findViewById(R.id.positionLabel);
+        warpReaderViewModel.setReadPosition(new ReadPositionPercentageWidgetImpl(positionBar, positionLabel));
         TextView leftWarpLabel = appCompatActivity.findViewById(R.id.leftWarpLabel);
         TextView rightWarpLabel = appCompatActivity.findViewById(R.id.rightWarpLabel);
         warpReaderViewModel.setWarpTextLabelUpdater(new WarpTextWidgetImpl(leftWarpLabel, rightWarpLabel));
