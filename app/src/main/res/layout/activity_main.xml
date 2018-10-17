@@ -45,29 +45,6 @@
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/centerWarpLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="13"
-                android:clickable="false"
-                android:contextClickable="false"
-                android:cursorVisible="false"
-                android:defaultFocusHighlightEnabled="false"
-                android:editable="false"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:focusedByDefault="false"
-                android:inputType="textPersonName"
-                android:linksClickable="false"
-                android:longClickable="false"
-                android:selectAllOnFocus="false"
-                android:textAlignment="center"
-                android:textColor="@color/black_overlay"
-                android:textColorLink="@color/black_overlay"
-                android:textIsSelectable="false"
-                android:textSize="30sp" />
-
-            <TextView
                 android:id="@+id/rightWarpLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

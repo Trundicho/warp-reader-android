@@ -36,9 +36,7 @@ public class WarpReaderViewBuilderImpl implements WarpReaderViewBuilder {
         warpReaderViewModel.setReadPosition(new ReadPositionPercentageWidgetImpl(positionBar, positionLabel));
         TextView leftWarpLabel = appCompatActivity.findViewById(R.id.leftWarpLabel);
         TextView rightWarpLabel = appCompatActivity.findViewById(R.id.rightWarpLabel);
-        TextView centerWarpLabel = appCompatActivity.findViewById(R.id.centerWarpLabel);
         warpReaderViewModel.setWarpTextLabelUpdater(new WarpTextWidgetImpl(leftWarpLabel,
-                centerWarpLabel,
                 rightWarpLabel));
         TextView durationLabel = appCompatActivity.findViewById(R.id.durationLabel);
         warpReaderViewModel.setDurationLabel(new DurationWidgetImpl(durationLabel));
