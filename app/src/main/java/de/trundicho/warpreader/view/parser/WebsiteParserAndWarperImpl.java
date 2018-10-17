@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import de.trundicho.warp.reader.core.controller.WarpInitializer;
 import de.trundicho.warp.reader.core.view.api.WebsiteParserAndWarper;
