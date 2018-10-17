@@ -8,118 +8,134 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="495dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/leftWarpLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:contextClickable="false"
-                    android:cursorVisible="false"
-                    android:defaultFocusHighlightEnabled="false"
-                    android:editable="false"
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:focusedByDefault="false"
-                    android:inputType="textPersonName"
-                    android:linksClickable="false"
-                    android:longClickable="false"
-                    android:selectAllOnFocus="false"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/black_overlay"
-                    android:textColorLink="@color/black_overlay"
-                    android:textIsSelectable="false"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/rightWarpLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:contextClickable="false"
-                    android:cursorVisible="false"
-                    android:defaultFocusHighlightEnabled="false"
-                    android:editable="false"
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:focusedByDefault="false"
-                    android:inputType="textPersonName"
-                    android:linksClickable="false"
-                    android:longClickable="false"
-                    android:selectAllOnFocus="false"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/black_overlay"
-                    android:textColorLink="@color/black_overlay"
-                    android:textIsSelectable="false"
-                    android:textSize="30sp" />
-
-            </LinearLayout>
-
-            <SeekBar
-                android:id="@+id/wordsPerMinute"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/wordsPerMinuteLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/leftWarpLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:cursorVisible="false"
+                android:defaultFocusHighlightEnabled="false"
+                android:editable="false"
                 android:ems="10"
-                android:textAlignment="viewEnd" />
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:inputType="textPersonName"
+                android:linksClickable="false"
+                android:longClickable="false"
+                android:selectAllOnFocus="false"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black_overlay"
+                android:textColorLink="@color/black_overlay"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/durationLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/centerWarpLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="13"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:cursorVisible="false"
+                android:defaultFocusHighlightEnabled="false"
+                android:editable="false"
                 android:ems="10"
-                android:textAlignment="viewEnd" />
-
-            <SeekBar
-                android:id="@+id/readPosition"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:inputType="textPersonName"
+                android:linksClickable="false"
+                android:longClickable="false"
+                android:selectAllOnFocus="false"
+                android:textAlignment="center"
+                android:textColor="@color/black_overlay"
+                android:textColorLink="@color/black_overlay"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/positionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/rightWarpLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:cursorVisible="false"
+                android:defaultFocusHighlightEnabled="false"
+                android:editable="false"
                 android:ems="10"
-                android:textAlignment="viewEnd" />
-
-            <Button
-                android:id="@+id/playButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=">" />
-
-            <EditText
-                android:id="@+id/textArea"
-                android:layout_width="match_parent"
-                android:layout_height="101dp"
-                android:ems="10"
-                android:focusedByDefault="true"
-                android:inputType="textMultiLine" />
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:inputType="textPersonName"
+                android:linksClickable="false"
+                android:longClickable="false"
+                android:selectAllOnFocus="false"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black_overlay"
+                android:textColorLink="@color/black_overlay"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
 
         </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/wordsPerMinute"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/wordsPerMinuteLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/durationLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAlignment="viewEnd" />
+
+        <SeekBar
+            android:id="@+id/readPosition"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/positionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAlignment="viewEnd" />
+
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=">" />
+
+        <EditText
+            android:id="@+id/textArea"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:ems="10"
+            android:focusedByDefault="true"
+            android:inputType="textMultiLine" />
 
     </LinearLayout>
 
