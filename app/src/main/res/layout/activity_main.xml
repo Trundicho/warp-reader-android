@@ -52,8 +52,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="false"
+                    android:contextClickable="false"
+                    android:cursorVisible="false"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:editable="false"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:focusableInTouchMode="false"
+                    android:focusedByDefault="false"
+                    android:inputType="textPersonName"
+                    android:linksClickable="false"
+                    android:longClickable="false"
+                    android:selectAllOnFocus="false"
+                    android:textAlignment="viewStart"
+                    android:textColorLink="@color/black_overlay"
+                    android:textIsSelectable="false" />
 
             </LinearLayout>
 
