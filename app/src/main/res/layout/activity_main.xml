@@ -114,6 +114,12 @@
             android:focusedByDefault="true"
             android:inputType="textMultiLine" />
 
+        <Button
+            android:id="@+id/clipboardButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paste" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

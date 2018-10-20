@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
         initInputTextArea(inputTextWidget);
 
         ReadingPositionBox readingPosition = uiModel.getReadPosition();
-        initAndRegisterReadingPosition(playModel, readingPosition);
+        initAndRegisterReadingPosition(playModel, readingPosition, playModeModel);
 
         WarpTextWidget warpTextLabelUpdater = uiModel.getWarpTextLabelUpdater();
 
@@ -102,9 +102,11 @@ public class MainActivity extends Activity {
 
     }
 
-    private void initAndRegisterReadingPosition(PlayModel playModel, ReadingPositionBox readingPosition) {
+    private void initAndRegisterReadingPosition(PlayModel playModel, ReadingPositionBox readingPosition,
+                                                PlayModeModel playModeModel) {
         readingPosition.setReadPositionPercentage(Integer.valueOf(0));
-        readingPosition.registerChangeListenerAction(new ReadingPositionPlayModelUpdater(readingPosition, playModel));
+        readingPosition.registerChangeListenerAction(new ReadingPositionPlayModelUpdater(readingPosition, playModel,
+                playModeModel));
         playModel.addListener(new ReadingPositionUpdaterListener(readingPosition));
     }
 
