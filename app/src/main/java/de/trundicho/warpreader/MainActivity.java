@@ -51,8 +51,7 @@ import de.trundicho.warpreader.view.ui.WarpReaderViewBuilderImpl;
 
 public class MainActivity extends Activity {
     private static final int DEFAULT_NUMBER_OF_CHARS_TO_DISPLAY = 15;
-    private static final int DEFAULT_WORDS_PER_MINUTE = 100;
-    private static final int TEXT_AREA_PARSER_DELAY = 500;
+    private static final int DEFAULT_WORDS_PER_MINUTE = 130;
     private I18nLocalizer i18nLocalizer;
     private Disposer disposer;
 

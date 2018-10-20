@@ -13,7 +13,7 @@ import de.trundicho.warp.reader.core.view.api.timer.WarpTimer;
 
 class WarpTimerImpl implements WarpTimer {
     private final Runnable warper;
-    private final ScheduledExecutorService scheduledExecutorService;
+    private ScheduledExecutorService scheduledExecutorService;
 
     WarpTimerImpl(WarpUpdater warpUpdater, Activity activity) {
         warper = () -> {
@@ -29,10 +29,15 @@ class WarpTimerImpl implements WarpTimer {
 
     @Override
     public void cancel() {
+        scheduledExecutorService.shutdownNow();
     }
 
     @Override
     public void scheduleRepeating(int periodMillis) {
+        cancel();
+        if (scheduledExecutorService.isShutdown()) {
+            this.scheduledExecutorService = Executors.newScheduledThreadPool(1);
+        }
         scheduledExecutorService.schedule(warper, periodMillis, TimeUnit.MILLISECONDS);
     }
 

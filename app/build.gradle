@@ -8,8 +8,8 @@ android {
         applicationId "de.trundicho.warpreader"
         minSdkVersion 26
         targetSdkVersion 27
-        versionCode 4
-        versionName "2.1"
+        versionCode 6
+        versionName "2.3"
     }
     buildTypes {
         release {
