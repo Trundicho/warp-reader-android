@@ -44,9 +44,7 @@ public class WarpReaderViewBuilderImpl implements WarpReaderViewBuilder {
         TextView durationLabel = appCompatActivity.findViewById(R.id.durationLabel);
         warpReaderViewModel.setDurationLabel(new DurationWidgetImpl(durationLabel));
         Button clipboardButton = appCompatActivity.findViewById(R.id.clipboardButton);
-        ClipboardManager clipboardManager = (ClipboardManager) appCompatActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-        warpReaderViewModel.setClipboardButton(new ClipboardWidgetImpl(clipboardButton, inputTextWidget,
-                clipboardManager));
+        warpReaderViewModel.setClipboardButton(new ClipboardWidgetImpl(clipboardButton));
         return warpReaderViewModel;
     }
 

@@ -15,22 +15,23 @@ class WebsiteParserAndWarperImpl implements WebsiteParserAndWarper {
     private final WarpInitializer warpInitializer;
     private final I18nLocalizer i18nLocalizer;
     private final Activity activity;
+    private final InputTextWidget textArea;
     private final String errorText;
     private final ExecutorService scheduledExecutorService;
 
     WebsiteParserAndWarperImpl(WarpInitializer warpInitializer, I18nLocalizer i18nLocalizer,
-                               Activity activity) {
+                               Activity activity,
+                               InputTextWidget textArea) {
         this.warpInitializer = warpInitializer;
         this.i18nLocalizer = i18nLocalizer;
         this.activity = activity;
+        this.textArea = textArea;
         this.errorText = "Error occured: Please try other URL.";
         this.boilerplateService = new TextFromWebUrlParserService();
         this.scheduledExecutorService = Executors.newSingleThreadExecutor();
     }
 
-    public void parseWebsiteAndStartWarping(InputTextWidget textArea) {
-        String text = textArea.getText();
-
+    public void parseWebsiteAndStartWarping(String text) {
         this.scheduledExecutorService.submit(new Runnable() {
             @Override
             public void run() {

@@ -39,7 +39,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     implementation ('com.android.support:appcompat-v7:27.1.1')
-    implementation('com.github.Trundicho:warp-reader:v1.3.1') {
+    implementation('com.github.Trundicho:warp-reader:v1.3.2') {
         exclude module: 'warp-reader-ui-gwt'
         exclude module: 'warp-reader-ui-vaadin-8'
     }

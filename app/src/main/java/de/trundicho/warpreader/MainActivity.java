@@ -1,6 +1,9 @@
 package de.trundicho.warpreader;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +34,9 @@ import de.trundicho.warp.reader.core.model.warpword.WordLengthModelMutable;
 import de.trundicho.warp.reader.core.model.warpword.impl.WordLengthModelImpl;
 import de.trundicho.warp.reader.core.view.api.WarpReaderViewBuilder;
 import de.trundicho.warp.reader.core.view.api.WarpReaderViewModel;
+import de.trundicho.warp.reader.core.view.api.parser.TextAreaParser;
 import de.trundicho.warp.reader.core.view.api.timer.WarpTimerFactory;
+import de.trundicho.warp.reader.core.view.api.widgets.ButtonWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.InputTextWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.NumberLabelWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.PlayButtonWidget;
@@ -40,6 +45,7 @@ import de.trundicho.warp.reader.core.view.api.widgets.WarpTextWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.WordsPerMinuteWidget;
 import de.trundicho.warpreader.view.parser.TextAreaParserTimerBuilder;
 import de.trundicho.warpreader.view.timer.WarpTimerFactoryImpl;
+import de.trundicho.warpreader.view.ui.ClipboardWidgetImpl;
 import de.trundicho.warpreader.view.ui.I18nLocalizer;
 import de.trundicho.warpreader.view.ui.WarpReaderViewBuilderImpl;
 
@@ -97,9 +103,30 @@ public class MainActivity extends Activity {
                 playModeModel, speedWeightModel, textSplitter, playModel, durationWidget, warpTimerFactory);
 
         TextAreaParserTimerBuilder textAreaParserTimerBuilder = new TextAreaParserTimerBuilder(warpInitializer, i18nLocalizer,
-                TEXT_AREA_PARSER_DELAY, this);
-        ScheduledFuture textAreaParserTimer = textAreaParserTimerBuilder.buildTextAreaParserTimer(inputTextWidget);
+                 this, inputTextWidget);
+        TextAreaParser textAreaParserTimer = textAreaParserTimerBuilder.build();
+        ClipboardWidgetImpl clipBoardButton = (ClipboardWidgetImpl)uiModel.getClipBoardButton();
+        clipBoardButton.addClickListener(new Runnable() {
+            @Override
+            public void run() {
+                ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData primaryClip = clipboardManager.getPrimaryClip();
+                if (primaryClip  != null) {
+                    if (primaryClip.getItemCount() > 0) {
+                        ClipData.Item itemAt = primaryClip.getItemAt(0);
+                        if (itemAt != null) {
+                            CharSequence text = itemAt.getText();
+                            if (text != null) {
+                                textAreaParserTimer.parseInputTextAndStartWarping(text.toString());
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
+        textAreaParserTimer.parseInputTextAndStartWarping(inputTextWidget.getText());
+        inputTextWidget.setText("");
     }
 
     private void initAndRegisterReadingPosition(PlayModel playModel, ReadingPositionBox readingPosition,

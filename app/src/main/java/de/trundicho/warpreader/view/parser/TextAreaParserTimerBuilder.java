@@ -16,31 +16,25 @@ import de.trundicho.warpreader.view.ui.I18nLocalizer;
 
 public class TextAreaParserTimerBuilder {
 
-    private final TextAreaParser textAreaParser;
-    private final ScheduledExecutorService scheduledExecutorService;
     private final Activity activity;
-    private final int parserDelay;
+    private final InputTextWidget textArea;
+    private final WarpInitializer warpInitializer;
+    private final I18nLocalizer i18nLocalizer;
 
     public TextAreaParserTimerBuilder(WarpInitializer warpInitializer, I18nLocalizer i18nLocalizer,
-                                      int parserDelay,
-                                      Activity activity) {
-        this.parserDelay = parserDelay;
+                                      Activity activity, InputTextWidget textArea) {
+        this.warpInitializer = warpInitializer;
+        this.i18nLocalizer = i18nLocalizer;
         this.activity = activity;
+        this.textArea = textArea;
+    }
+
+    public TextAreaParser build() {
         WebsiteParserAndWarper websiteParserAndWarper = new WebsiteParserAndWarperImpl(warpInitializer,
                 i18nLocalizer,
-                activity);
-        this.textAreaParser = new TextAreaParser(warpInitializer, websiteParserAndWarper);
-        this.scheduledExecutorService = Executors.newScheduledThreadPool(1);
+                activity, textArea);
+        return new TextAreaParser(warpInitializer, websiteParserAndWarper);
     }
 
-    public ScheduledFuture<?> buildTextAreaParserTimer(InputTextWidget inputTextWidget) {
-        Runnable runnable = () -> {
-            activity.runOnUiThread(() -> textAreaParser.parseInputTextAndStartWarping(inputTextWidget));
-        };
-
-        return scheduledExecutorService.scheduleAtFixedRate(runnable,
-                parserDelay, parserDelay,
-                TimeUnit.MILLISECONDS);
-    }
 
 }
