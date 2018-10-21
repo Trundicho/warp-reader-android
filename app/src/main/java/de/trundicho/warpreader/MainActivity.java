@@ -4,17 +4,14 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 
 import java.util.Locale;
-import java.util.concurrent.ScheduledFuture;
 
 import de.trundicho.warp.reader.core.controller.Disposer;
 import de.trundicho.warp.reader.core.controller.WarpInitializer;
+import de.trundicho.warp.reader.core.controller.WarpUpdater;
 import de.trundicho.warp.reader.core.controller.play.PlayButtonListenerInitializer;
 import de.trundicho.warp.reader.core.controller.position.ReadingPositionPlayModelUpdater;
 import de.trundicho.warp.reader.core.controller.position.ReadingPositionUpdaterListener;
@@ -35,8 +32,7 @@ import de.trundicho.warp.reader.core.model.warpword.impl.WordLengthModelImpl;
 import de.trundicho.warp.reader.core.view.api.WarpReaderViewBuilder;
 import de.trundicho.warp.reader.core.view.api.WarpReaderViewModel;
 import de.trundicho.warp.reader.core.view.api.parser.TextAreaParser;
-import de.trundicho.warp.reader.core.view.api.timer.WarpTimerFactory;
-import de.trundicho.warp.reader.core.view.api.widgets.ButtonWidget;
+import de.trundicho.warp.reader.core.view.api.timer.WarpTimer;
 import de.trundicho.warp.reader.core.view.api.widgets.InputTextWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.NumberLabelWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.PlayButtonWidget;
@@ -44,7 +40,7 @@ import de.trundicho.warp.reader.core.view.api.widgets.ReadingPositionBox;
 import de.trundicho.warp.reader.core.view.api.widgets.WarpTextWidget;
 import de.trundicho.warp.reader.core.view.api.widgets.WordsPerMinuteWidget;
 import de.trundicho.warpreader.view.parser.TextAreaParserTimerBuilder;
-import de.trundicho.warpreader.view.timer.WarpTimerFactoryImpl;
+import de.trundicho.warpreader.view.timer.WarpTimerImpl;
 import de.trundicho.warpreader.view.ui.ClipboardWidgetImpl;
 import de.trundicho.warpreader.view.ui.I18nLocalizer;
 import de.trundicho.warpreader.view.ui.WarpReaderViewBuilderImpl;
@@ -75,6 +71,17 @@ public class MainActivity extends Activity {
                 textSplitter, playModel);
     }
 
+    @Override
+    protected void onDestroy() {
+        disposer.doDispose();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        disposer.doDispose();
+        super.onStop();
+    }
 
     private void initUiAndRegisterListeners(WarpReaderViewModel uiModel, WpmSpeedExchanger wpmSpeedExchanger,
                                             DelayModel speedModel, PlayModeModel playModeModel,
@@ -96,21 +103,21 @@ public class MainActivity extends Activity {
         WarpTextWidget warpTextLabelUpdater = uiModel.getWarpTextLabelUpdater();
 
         NumberLabelWidget durationWidget = uiModel.getDurationLabel();
-        WarpTimerFactory warpTimerFactory = new WarpTimerFactoryImpl(this);
-
+        WarpTimer warpTimer = new WarpTimerImpl(new WarpUpdater(playModel), this);
+        disposer.add(() -> warpTimer.cancel());
         WarpInitializer warpInitializer = new WarpInitializer(warpTextLabelUpdater, speedModel,
-                playModeModel, speedWeightModel, textSplitter, playModel, durationWidget, warpTimerFactory);
+                playModeModel, speedWeightModel, textSplitter, playModel, durationWidget, warpTimer);
 
         TextAreaParserTimerBuilder textAreaParserTimerBuilder = new TextAreaParserTimerBuilder(warpInitializer, i18nLocalizer,
-                 this, inputTextWidget);
+                this, inputTextWidget);
         TextAreaParser textAreaParserTimer = textAreaParserTimerBuilder.build();
-        ClipboardWidgetImpl clipBoardButton = (ClipboardWidgetImpl)uiModel.getClipBoardButton();
+        ClipboardWidgetImpl clipBoardButton = (ClipboardWidgetImpl) uiModel.getClipBoardButton();
         clipBoardButton.addClickListener(new Runnable() {
             @Override
             public void run() {
                 ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData primaryClip = clipboardManager.getPrimaryClip();
-                if (primaryClip  != null) {
+                if (primaryClip != null) {
                     if (primaryClip.getItemCount() > 0) {
                         ClipData.Item itemAt = primaryClip.getItemAt(0);
                         if (itemAt != null) {

@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
 import de.trundicho.warp.reader.core.controller.WarpUpdater;
 import de.trundicho.warp.reader.core.view.api.timer.WarpTimer;
 
-class WarpTimerImpl implements WarpTimer {
+public class WarpTimerImpl implements WarpTimer {
     private final Runnable warper;
     private ScheduledExecutorService scheduledExecutorService;
 
-    WarpTimerImpl(WarpUpdater warpUpdater, Activity activity) {
+    public WarpTimerImpl(WarpUpdater warpUpdater, Activity activity) {
         warper = () -> {
             activity.runOnUiThread(() -> warpUpdater.doNextWarp());
         };
