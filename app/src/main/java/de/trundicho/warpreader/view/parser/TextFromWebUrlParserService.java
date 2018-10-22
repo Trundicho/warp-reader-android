@@ -1,32 +1,38 @@
 package de.trundicho.warpreader.view.parser;
 
 
-import me.angrybyte.goose.Article;
-import me.angrybyte.goose.Configuration;
-import me.angrybyte.goose.ContentExtractor;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import de.l3s.boilerpipe.BoilerpipeProcessingException;
+import de.l3s.boilerpipe.document.TextDocument;
+import de.l3s.boilerpipe.extractors.CommonExtractors;
+import de.l3s.boilerpipe.sax.BoilerpipeSAXInput;
+import de.l3s.boilerpipe.sax.HTMLDocument;
+import de.l3s.boilerpipe.sax.HTMLFetcher;
 
 @SuppressWarnings("serial")
 public class TextFromWebUrlParserService {
 
-
-    private final ContentExtractor extractor;
-
-    public TextFromWebUrlParserService() {
-        Configuration config = new Configuration(null);
-        extractor = new ContentExtractor(config);
-    }
-
-    public String parseTextFromWebsite(String url) throws IllegalArgumentException {
-        Article article = extractor.extractContent(url, false);
-        if (article == null) {
-            return "Couldn't load the article, is your URL correct, is your Internet working?";
+    public String parseTextFromWebsite(String input) throws IllegalArgumentException {
+        HTMLDocument htmlDoc;
+        try {
+            htmlDoc = HTMLFetcher.fetch(new URL(input));
+            TextDocument doc = new BoilerpipeSAXInput(htmlDoc.toInputSource()).getTextDocument();
+            return CommonExtractors.ARTICLE_EXTRACTOR.getText(doc);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (BoilerpipeProcessingException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
         }
-        String details = article.getCleanedArticleText();
-        if (details == null || details.isEmpty()) {
-            System.err.println("Couldn't load the article text, the page is messy. Trying with page description...");
-            return article.getMetaDescription();
-        }
-        return details;
+        return null;
     }
 
 }
