@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -48,8 +49,10 @@ import de.trundicho.warpreader.view.ui.WarpReaderViewBuilderImpl;
 public class MainActivity extends Activity {
     private static final int DEFAULT_NUMBER_OF_CHARS_TO_DISPLAY = 15;
     private static final int DEFAULT_WORDS_PER_MINUTE = 140;
+    private static final String WORDS_PER_MINUTE_INSTANCE = "WORDS_PER_MINUTE";
     private I18nLocalizer i18nLocalizer;
     private Disposer disposer;
+    private DelayModel speedModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +65,22 @@ public class MainActivity extends Activity {
         TextSplitter textSplitter = new TextSplitter(wordLengthModel);
         SpeedWeightModel speedWeightModel = new SpeedWeightModelImpl();
         WpmSpeedExchanger wpmSpeedExchanger = new WpmSpeedExchangerImpl();
-        DelayModel speedModel = new DelayModelImpl(wpmSpeedExchanger.exchangeToSpeed(DEFAULT_WORDS_PER_MINUTE));
+        double defaultWordsPerMinute = getDefaultWordsPerMinute();
+        speedModel = new DelayModelImpl(wpmSpeedExchanger.exchangeToSpeed(defaultWordsPerMinute));
         PlayModel playModel = new PlayModel();
 
         WarpReaderViewBuilder viewBuilder = new WarpReaderViewBuilderImpl(this);
         WarpReaderViewModel uiModel = viewBuilder.buildView();
         initUiAndRegisterListeners(uiModel, wpmSpeedExchanger, speedModel, playModeModel, speedWeightModel,
                 textSplitter, playModel);
+
+        disposer.add(() -> {
+            SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            double defaultDelay = speedModel.getDefaultDelay();
+            editor.putInt(WORDS_PER_MINUTE_INSTANCE, new Double(wpmSpeedExchanger.exchangeToWpm(defaultDelay)).intValue());
+            editor.commit();
+        });
     }
 
     @Override
@@ -133,6 +145,12 @@ public class MainActivity extends Activity {
 
         textAreaParserTimer.parseInputTextAndStartWarping(inputTextWidget.getText());
         inputTextWidget.setText("");
+    }
+
+    private double getDefaultWordsPerMinute() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        return preferences.getInt(WORDS_PER_MINUTE_INSTANCE, DEFAULT_WORDS_PER_MINUTE);
     }
 
     private void initAndRegisterReadingPosition(PlayModel playModel, ReadingPositionBox readingPosition,
