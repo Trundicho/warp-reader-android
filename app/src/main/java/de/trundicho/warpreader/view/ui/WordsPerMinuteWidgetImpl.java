@@ -15,8 +15,8 @@ class WordsPerMinuteWidgetImpl implements WordsPerMinuteWidget {
     WordsPerMinuteWidgetImpl(SeekBar wordsPerMinute, TextView wordsPerMinuteLabel) {
         this.wordsPerMinute = wordsPerMinute;
         this.wordsPerMinuteLabel = wordsPerMinuteLabel;
-        wordsPerMinute.setMin(10);
-        wordsPerMinute.setMax(1000);
+        wordsPerMinute.setMin(40);
+        wordsPerMinute.setMax(600);
     }
 
     @Override
