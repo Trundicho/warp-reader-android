@@ -78,8 +78,8 @@ public class MainActivity extends Activity {
             SharedPreferences preferences = getPreferences(MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             double defaultDelay = speedModel.getDefaultDelay();
-            editor.putInt(WORDS_PER_MINUTE_INSTANCE, new Double(wpmSpeedExchanger.exchangeToWpm(defaultDelay)).intValue());
-            editor.commit();
+            editor.putInt(WORDS_PER_MINUTE_INSTANCE, Double.valueOf(wpmSpeedExchanger.exchangeToWpm(defaultDelay)).intValue());
+            editor.apply();
         });
     }
 
@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
 
         NumberLabelWidget durationWidget = uiModel.getDurationLabel();
         WarpTimer warpTimer = new WarpTimerImpl(new WarpUpdater(playModel), this);
-        disposer.add(() -> warpTimer.cancel());
+        disposer.add(warpTimer::cancel);
         WarpInitializer warpInitializer = new WarpInitializer(warpTextLabelUpdater, speedModel,
                 playModeModel, speedWeightModel, textSplitter, playModel, durationWidget, warpTimer);
 
@@ -124,19 +124,16 @@ public class MainActivity extends Activity {
                 this, inputTextWidget);
         TextAreaParser textAreaParserTimer = textAreaParserTimerBuilder.build();
         ClipboardWidgetImpl clipBoardButton = (ClipboardWidgetImpl) uiModel.getClipBoardButton();
-        clipBoardButton.addClickListener(new Runnable() {
-            @Override
-            public void run() {
-                ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData primaryClip = clipboardManager.getPrimaryClip();
-                if (primaryClip != null) {
-                    if (primaryClip.getItemCount() > 0) {
-                        ClipData.Item itemAt = primaryClip.getItemAt(0);
-                        if (itemAt != null) {
-                            CharSequence text = itemAt.getText();
-                            if (text != null) {
-                                textAreaParserTimer.parseInputTextAndStartWarping(text.toString());
-                            }
+        clipBoardButton.registerChangeListenerAction(() -> {
+            ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData primaryClip = clipboardManager.getPrimaryClip();
+            if (primaryClip != null) {
+                if (primaryClip.getItemCount() > 0) {
+                    ClipData.Item itemAt = primaryClip.getItemAt(0);
+                    if (itemAt != null) {
+                        CharSequence text = itemAt.getText();
+                        if (text != null) {
+                            textAreaParserTimer.parseInputTextAndStartWarping(text.toString());
                         }
                     }
                 }
@@ -155,7 +152,7 @@ public class MainActivity extends Activity {
 
     private void initAndRegisterReadingPosition(PlayModel playModel, ReadingPositionBox readingPosition,
                                                 PlayModeModel playModeModel) {
-        readingPosition.setReadPositionPercentage(Integer.valueOf(0));
+        readingPosition.setReadPositionPercentage(0);
         readingPosition.registerChangeListenerAction(new ReadingPositionPlayModelUpdater(readingPosition, playModel,
                 playModeModel));
         playModel.addListener(new ReadingPositionUpdaterListener(readingPosition));

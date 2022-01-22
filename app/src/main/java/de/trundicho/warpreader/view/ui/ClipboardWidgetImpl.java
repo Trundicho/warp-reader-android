@@ -17,12 +17,8 @@ public class ClipboardWidgetImpl implements ButtonWidget {
         clipboardButton.callOnClick();
     }
 
-    public void addClickListener(Runnable runnable){
-        clipboardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                runnable.run();
-            }
-        });
+    @Override
+    public void registerChangeListenerAction(Runnable runnable) {
+        clipboardButton.setOnClickListener(view -> runnable.run());
     }
 }

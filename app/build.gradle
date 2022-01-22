@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    compileSdk 32
+    compileSdkVersion 32
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "de.trundicho.warpreader"
-        minSdkVersion 26
-        targetSdkVersion 27
+        minSdkVersion 29
+        targetSdkVersion 32
         versionCode 8
         versionName "2.5"
     }
@@ -34,15 +35,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    implementation ('com.android.support:appcompat-v7:27.1.1')
-    implementation('com.github.Trundicho:warp-reader:v1.3.3') {
-        exclude module: 'warp-reader-ui-gwt'
-        exclude module: 'warp-reader-ui-vaadin-8'
-    }
-    compile 'com.github.BartoszJarocki:android-boilerpipe:master'
+    testImplementation 'junit:junit:4.13.2'
+    implementation('com.github.Trundicho:warp-reader-core:v1.0.2')
+    implementation 'com.github.BartoszJarocki:android-boilerpipe:master'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
 }
 
