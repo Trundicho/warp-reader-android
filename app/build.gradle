@@ -7,10 +7,10 @@ android {
 
     defaultConfig {
         applicationId "de.trundicho.warpreader"
-        minSdkVersion 29
+        minSdkVersion 28 // android 9
         targetSdkVersion 32
-        versionCode 10
-        versionName "2.7"
+        versionCode 11
+        versionName "2.8"
     }
     buildTypes {
         release {
@@ -37,7 +37,6 @@ repositories {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.13.2'
     implementation('com.github.Trundicho:warp-reader-core:v1.0.2')
     implementation 'com.github.BartoszJarocki:android-boilerpipe:master'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
