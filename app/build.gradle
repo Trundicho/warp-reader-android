@@ -39,7 +39,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation('com.github.Trundicho:warp-reader-core:v1.0.2')
     implementation 'com.github.BartoszJarocki:android-boilerpipe:master'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
 }
 
