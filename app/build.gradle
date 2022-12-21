@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdk 32
     compileSdkVersion 32
-    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "de.trundicho.warpreader"
@@ -22,12 +21,18 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-
     packagingOptions {
-        pickFirst '**'
+        jniLibs {
+            pickFirsts += ['**']
+        }
+        resources {
+            pickFirsts += ['**']
+        }
     }
 
+
     useLibrary 'org.apache.http.legacy'
+    namespace 'de.trundicho.warpreader'
 }
 
 repositories {
